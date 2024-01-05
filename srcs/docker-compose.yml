@@ -3,7 +3,6 @@ services:
 
   python:
     container_name: pythonCompose
-    restart: always
     build:
       context: ./python
     image: islivebroadcast:1.0

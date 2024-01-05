@@ -6,7 +6,7 @@
 #    By: titouanck <chevrier.titouan@gmail.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/05 12:08:23 by titouanck         #+#    #+#              #
-#    Updated: 2024/01/05 17:10:07 by titouanck        ###   ########.fr        #
+#    Updated: 2024/01/05 17:26:52 by titouanck        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ class Bot(commands.Bot):
                         if isLiveBroadcast(os.environ['CHANNEL']):
                             print(os.environ['CHANNEL'] + " is LIVE!")
                             await channelObj.send(message)
+                            sys.exit(0)
                             return
                         else:
                             print(os.environ['CHANNEL'] + " is offline.")
