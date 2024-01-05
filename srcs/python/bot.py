@@ -6,7 +6,7 @@
 #    By: titouanck <chevrier.titouan@gmail.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/05 12:08:23 by titouanck         #+#    #+#              #
-#    Updated: 2024/01/05 16:13:04 by titouanck        ###   ########.fr        #
+#    Updated: 2024/01/05 17:10:07 by titouanck        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,6 @@ import os
 
 from time           import sleep
 from twitchio.ext   import commands
-from dotenv         import load_dotenv
 
 # **************************************************************************** #
 
@@ -48,8 +47,6 @@ class Bot(commands.Bot):
                             sleep(1)
                     
 # **************************************************************************** #
-
-load_dotenv()
 
 def main():
     twitchBot = Bot()

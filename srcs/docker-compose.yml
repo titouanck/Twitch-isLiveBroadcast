@@ -1,0 +1,13 @@
+version: '3'
+services:
+
+  python:
+    container_name: pythonCompose
+    restart: always
+    build:
+      context: ./python
+    image: islivebroadcast:1.0
+    environment:
+      - TOKEN=${TOKEN}
+      - CHANNEL=${CHANNEL}
+      - PREFIX=${PREFIX}
