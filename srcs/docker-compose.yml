@@ -6,6 +6,8 @@ services:
     build:
       context: ./python
     image: islivebroadcast:1.0
+    volumes:
+      - ../logs:/root/logs
     environment:
       - TOKEN=${TOKEN}
       - CHANNEL=${CHANNEL}

@@ -6,7 +6,7 @@
 #    By: titouanck <chevrier.titouan@gmail.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/05 12:08:23 by titouanck         #+#    #+#              #
-#    Updated: 2024/01/05 17:26:52 by titouanck        ###   ########.fr        #
+#    Updated: 2024/01/05 20:36:57 by titouanck        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,16 @@ import requests
 import threading
 import asyncio
 import os
+import time
 
-from time           import sleep
 from twitchio.ext   import commands
+from datetime       import datetime
+
+# **************************************************************************** #
+
+def main():
+    twitchBot = Bot()
+    twitchBot.run()
 
 # **************************************************************************** #
 
@@ -33,26 +40,21 @@ class Bot(commands.Bot):
         if channelObj:
             while True:
                 if isLiveBroadcast(os.environ['CHANNEL']):
+                    writeToLogFile(os.environ['CHANNEL'] + " is currently live.")
                     while isLiveBroadcast(os.environ['CHANNEL']):
-                        print(os.environ['CHANNEL'] + " was already live when the program started")
-                        sleep(120)
+                        time.sleep(120)
                 else:
+                    writeToLogFile(os.environ['CHANNEL'] + " is offline.")
                     while True:
                         if isLiveBroadcast(os.environ['CHANNEL']):
-                            print(os.environ['CHANNEL'] + " is LIVE!")
+                            writeToLogFile(os.environ['CHANNEL'] + " just went LIVE!")
                             await channelObj.send(message)
+                            writeToLogFile("Closing the program.")
                             sys.exit(0)
                             return
                         else:
-                            print(os.environ['CHANNEL'] + " is offline.")
-                            sleep(1)
+                            time.sleep(1)
                     
-# **************************************************************************** #
-
-def main():
-    twitchBot = Bot()
-    twitchBot.run()
-
 # **************************************************************************** #
 
 def isLiveBroadcast(channel):
@@ -66,5 +68,34 @@ def isLiveBroadcast(channel):
 
 # **************************************************************************** #
 
+def findFilename():
+    date_format = "%Y-%m-%d"
+    today_date = datetime.now().strftime(date_format)
+    filename = f"/root/logs/{today_date}.log"
+    return filename
+
+def createLogFile():
+    filename = findFilename()
+
+    if os.path.isfile(filename):
+        print(f"{filename} already exists")
+        logFile = open(filename, 'a')
+    else:
+        print(f"{filename} has been created")
+        logFile = open(filename, 'w')
+    logFile.write("# **************************************** #\n")
+    return logFile
+
+def writeToLogFile(str):
+    currentTime = datetime.now().strftime("%H:%M:%S")
+    logFile.write(f"[{currentTime}] {str}\n")
+    logFile.flush()
+    print(str)
+
+# **************************************************************************** #
+
+logFile = createLogFile()
+
 if __name__ == "__main__":
     main()
+    logFile.close()
