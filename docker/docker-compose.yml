@@ -1,0 +1,16 @@
+version: '3'
+services:
+
+  python:
+    container_name: pythonCompose
+    build:
+      context: ./python
+    image: islivebroadcast:2.0
+    volumes:
+      - ../channels:/app/channels
+    environment:
+      - TWITCH_CHANNEL=${TWITCH_CHANNEL}
+      - TWITCH_USERNAME=${TWITCH_USERNAME}
+      - MESSAGE_TO_SEND=${MESSAGE_TO_SEND}
+      - APP_ID=${APP_ID}
+      - USER_TOKEN=${USER_TOKEN}
