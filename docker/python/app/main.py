@@ -6,7 +6,7 @@
 #    By: titouanck <chevrier.titouan@gmail.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/06 13:26:34 by titouanck         #+#    #+#              #
-#    Updated: 2024/01/06 22:06:46 by titouanck        ###   ########.fr        #
+#    Updated: 2024/01/06 22:28:16 by titouanck        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,12 +49,13 @@ def is_offline():
             if index % 3 == 0: 
                 message += " podaBRASGAUCHE"
             elif index % 3 == 1:
-                message += "  podaBRASDROIT"
+                message += " podaBRASDROIT"
             main.irc_server.send_message(message)
             time.sleep(300)
             break
         else:
-            write_logs(f"{TWITCH_CHANNEL} is currently offline.")
+            if index % 5 == 0:
+                write_logs(f"{TWITCH_CHANNEL} is currently offline.")
             time.sleep(1)
             index += 1
 
