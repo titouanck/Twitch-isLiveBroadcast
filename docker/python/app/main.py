@@ -6,11 +6,11 @@
 #    By: titouanck <chevrier.titouan@gmail.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/06 13:26:34 by titouanck         #+#    #+#              #
-#    Updated: 2024/01/06 22:28:16 by titouanck        ###   ########.fr        #
+#    Updated: 2024/01/07 20:00:55 by titouanck        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-import time, os
+import time, os, random
 from mod_files      import open_logs, open_chat, write_logs, write_chat
 from mod_requests   import is_live_broadcast
 from mod_irc        import IrcServer
@@ -41,27 +41,22 @@ def is_online():
 
 def is_offline():
     index = 0
-    message = MESSAGE_TO_SEND
-    while True:
-        if is_live_broadcast(TWITCH_CHANNEL):
-            write_logs(TWITCH_CHANNEL + " just went LIVE!")
-            main.irc_server.connect()
-            if index % 3 == 0: 
-                message += " podaBRASGAUCHE"
-            elif index % 3 == 1:
-                message += " podaBRASDROIT"
-            main.irc_server.send_message(message)
-            time.sleep(300)
-            break
-        else:
-            if index % 5 == 0:
-                write_logs(f"{TWITCH_CHANNEL} is currently offline.")
-            time.sleep(1)
-            index += 1
+    emotes = [" podaBRASGAUCHE", " podaBRASDROIT"]
+    message = MESSAGE_TO_SEND + random.choice(emotes)
+    while not is_live_broadcast(TWITCH_CHANNEL):
+        if index % 10 == 0:
+            write_logs(f"{TWITCH_CHANNEL} is currently offline.")
+        time.sleep(0.2)
+        index += 1
+    main.irc_server.connect()
+    main.irc_server.send_message(message)
+    write_logs(TWITCH_CHANNEL + " just went LIVE!")
+    time.sleep(300)
 
 # **************************************************************************** #
 
 if __name__ == "__main__":
     main()
+    
 
 # **************************************************************************** #

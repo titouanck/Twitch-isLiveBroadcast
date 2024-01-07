@@ -22,7 +22,7 @@ run:
 exec:
 	@docker exec -it $(pythonContainer) sh
 
-logs:
+container_logs:
 	@docker logs -f $(pythonContainer)
 
 ############################################################################
