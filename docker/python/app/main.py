@@ -6,7 +6,7 @@
 #    By: titouanck <chevrier.titouan@gmail.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/06 13:26:34 by titouanck         #+#    #+#              #
-#    Updated: 2024/01/07 20:00:55 by titouanck        ###   ########.fr        #
+#    Updated: 2024/01/07 20:10:28 by titouanck        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,8 +41,8 @@ def is_online():
 
 def is_offline():
     index = 0
-    emotes = [" podaBRASGAUCHE", " podaBRASDROIT"]
-    message = MESSAGE_TO_SEND + random.choice(emotes)
+    prefix = [" podaBRASGAUCHE", " podaBRASDROIT", " !", ""]
+    message = MESSAGE_TO_SEND + random.choice(prefix)
     while not is_live_broadcast(TWITCH_CHANNEL):
         if index % 10 == 0:
             write_logs(f"{TWITCH_CHANNEL} is currently offline.")
@@ -57,6 +57,5 @@ def is_offline():
 
 if __name__ == "__main__":
     main()
-    
 
 # **************************************************************************** #
