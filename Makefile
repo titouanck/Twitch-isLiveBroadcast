@@ -30,6 +30,6 @@ container_logs:
 clean:
 	rm -rf channels $(__pycache__)
 
-.PHONY:
+.PHONY: all stop build run exec container_logs clean
 
 ############################################################################
