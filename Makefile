@@ -27,7 +27,7 @@ exec:
 container_logs:
 	@docker logs -f $(pythonContainer)
 
-clean:
+clean: stop
 	rm -rf channels $(__pycache__)
 
 .PHONY: all stop build run exec container_logs clean
