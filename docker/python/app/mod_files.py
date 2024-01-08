@@ -6,7 +6,7 @@
 #    By: titouanck <chevrier.titouan@gmail.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/06 12:45:06 by titouanck         #+#    #+#              #
-#    Updated: 2024/01/08 06:18:06 by titouanck        ###   ########.fr        #
+#    Updated: 2024/01/08 07:16:43 by titouanck        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ def open_file(filename):
         file_obj.flush()
     else:
         file_obj = open(filename, 'w')
+        os.chmod(filename, 0o766)
         file_obj.write(f"[{get_time()}] \"{filename}\" has been created\n")
         file_obj.flush()
     return file_obj
@@ -38,6 +39,8 @@ def open_logs(twitch_channel):
     parent_directory = PATH_DIRECTORY + '/' + twitch_channel + '/' + LOGS_DIRECTORY
     if not os.path.exists(parent_directory):
         os.makedirs(parent_directory)
+    os.chmod(parent_directory, 0o777)
+    os.chmod(parent_directory.rstrip('/' + LOGS_DIRECTORY), 0o777)
 
     open_logs.date     = get_date()
     open_logs.filename = parent_directory + '/' + open_logs.date + ".log"
@@ -48,6 +51,8 @@ def open_chat(twitch_channel):
     parent_directory = PATH_DIRECTORY + '/' + twitch_channel + '/' + CHAT_DIRECTORY
     if not os.path.exists(parent_directory):
         os.makedirs(parent_directory)
+    os.chmod(parent_directory, 0o777)
+    os.chmod(parent_directory.rstrip('/' + CHAT_DIRECTORY), 0o777)
 
     open_chat.date     = get_date()
     open_chat.filename = parent_directory + '/' + open_chat.date + ".log"

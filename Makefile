@@ -1,6 +1,7 @@
 user				= $(shell whoami)
 pythonContainer		= pythonCompose
 path_dockercompose	= docker/docker-compose.yml
+__pycache__			= ./docker/python/app/__pycache__
 
 ############################################################################
 
@@ -17,6 +18,7 @@ build:
 	@echo "\033[0;32m[✔️] docker-compose built successfully\033[0m"
 
 run:
+	@mkdir -p channels/
 	@docker-compose -f $(path_dockercompose) up -d
 
 exec:
@@ -24,5 +26,10 @@ exec:
 
 container_logs:
 	@docker logs -f $(pythonContainer)
+
+clean:
+	rm -rf channels $(__pycache__)
+
+.PHONY:
 
 ############################################################################
