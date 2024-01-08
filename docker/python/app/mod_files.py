@@ -6,7 +6,7 @@
 #    By: titouanck <chevrier.titouan@gmail.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/06 12:45:06 by titouanck         #+#    #+#              #
-#    Updated: 2024/01/08 02:08:17 by titouanck        ###   ########.fr        #
+#    Updated: 2024/01/08 06:18:06 by titouanck        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ from mod_time import get_date, get_time
 PATH_DIRECTORY = "./channels"
 LOGS_DIRECTORY = "logs"
 CHAT_DIRECTORY = "chat"
-TWITCH_CHANNEL = os.environ["TWITCH_CHANNEL"]
+TWITCH_CHANNEL = os.environ["TWITCH_CHANNEL"].lower()
 
 # **************************************************************************** #
 
