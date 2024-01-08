@@ -6,7 +6,7 @@
 #    By: titouanck <chevrier.titouan@gmail.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/06 13:26:34 by titouanck         #+#    #+#              #
-#    Updated: 2024/01/08 15:23:31 by titouanck        ###   ########.fr        #
+#    Updated: 2024/01/08 15:50:45 by titouanck        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ def is_online():
     viewer_count = is_live_broadcast.data['data'][0]['viewer_count']
     write_logs(TWITCH_CHANNEL + " is currently live streaming.")
     write_logs(f"{TWITCH_CHANNEL} {{game_name:'{game_name}', viewer_count:'{viewer_count}', title:'{title}'}}")
-    time.sleep(300)
+    time.sleep(60)
 
 def is_offline():
     index = 0
@@ -59,7 +59,7 @@ def is_offline():
         index += 1
     main.irc_server.send_privmsg(message)
     write_logs(TWITCH_CHANNEL + " just went LIVE!")
-    time.sleep(300)
+    time.sleep(60)
 
 # **************************************************************************** #
 

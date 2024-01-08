@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    mod_irc.py                                         :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: titouanck <chevrier.titouan@gmail.com>     +#+  +:+       +#+         #
+#    By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/06 16:41:32 by titouanck         #+#    #+#              #
-#    Updated: 2024/01/08 15:36:40 by titouanck        ###   ########.fr        #
+#    Updated: 2024/01/08 23:31:46 by tchevrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,9 +54,8 @@ class IrcServer:
         write_chat(f">> {TWITCH_USERNAME}: {message}")
 
     def send_pong(self, message):
-        r = self.socket.send(f"PONG :{message}\n".encode("UTF-8"))
+        self.socket.send(f"PONG :{message}\n".encode("UTF-8"))
         write_chat(f">> /PONG {message}")
-        return r
 
     def get_socket(self):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -86,6 +85,8 @@ class IrcServer:
                         if message_type == "PING":
                             self.send_pong(content)
             except OSError as e:
+                self.get_socket()
                 self.connect()
+                write_chat("ERROR: program just went into: except OSError as e")
 
 # **************************************************************************** #
