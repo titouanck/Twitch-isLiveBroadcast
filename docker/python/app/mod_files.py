@@ -6,7 +6,7 @@
 #    By: titouanck <chevrier.titouan@gmail.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/06 12:45:06 by titouanck         #+#    #+#              #
-#    Updated: 2024/01/06 22:00:55 by titouanck        ###   ########.fr        #
+#    Updated: 2024/01/08 02:08:17 by titouanck        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ from mod_time import get_date, get_time
 PATH_DIRECTORY = "./channels"
 LOGS_DIRECTORY = "logs"
 CHAT_DIRECTORY = "chat"
+TWITCH_CHANNEL = os.environ["TWITCH_CHANNEL"]
 
 # **************************************************************************** #
 
@@ -33,8 +34,8 @@ def open_file(filename):
 
 # **************************************************************************** #
 
-def open_logs(user_login):
-    parent_directory = PATH_DIRECTORY + '/' + user_login + '/' + LOGS_DIRECTORY
+def open_logs(twitch_channel):
+    parent_directory = PATH_DIRECTORY + '/' + twitch_channel + '/' + LOGS_DIRECTORY
     if not os.path.exists(parent_directory):
         os.makedirs(parent_directory)
 
@@ -43,8 +44,8 @@ def open_logs(user_login):
     open_logs.file_obj = open_file(open_logs.filename)
     return open_logs.file_obj
 
-def open_chat(user_login):
-    parent_directory = PATH_DIRECTORY + '/' + user_login + '/' + CHAT_DIRECTORY
+def open_chat(twitch_channel):
+    parent_directory = PATH_DIRECTORY + '/' + twitch_channel + '/' + CHAT_DIRECTORY
     if not os.path.exists(parent_directory):
         os.makedirs(parent_directory)
 
@@ -58,7 +59,7 @@ def open_chat(user_login):
 def write_logs(str):
     if open_logs.date != get_date():
         open_logs.file_obj.close()
-        open_logs()
+        open_logs(TWITCH_CHANNEL)
     str = f"[{get_time()}] {str}"
     open_logs.file_obj.write(str + "\n")
     open_logs.file_obj.flush()
