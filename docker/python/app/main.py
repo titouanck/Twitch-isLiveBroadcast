@@ -6,7 +6,7 @@
 #    By: titouanck <chevrier.titouan@gmail.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/06 13:26:34 by titouanck         #+#    #+#              #
-#    Updated: 2024/01/08 07:15:40 by titouanck        ###   ########.fr        #
+#    Updated: 2024/01/08 15:23:31 by titouanck        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ def main():
     open_logs(TWITCH_CHANNEL)
     open_chat(TWITCH_CHANNEL)
     main.irc_server = IrcServer()
+    main.irc_server.get_socket()
     main.irc_server.connect()
     chat_thread = threading.Thread(target=main.irc_server.listener)
     chat_thread.start()
@@ -49,7 +50,7 @@ def is_online():
 
 def is_offline():
     index = 0
-    prefix = [" podaBRASGAUCHE", " podaBRASDROIT", " !", ""]
+    prefix = [" podaBRASGAUCHE", " podaBRASDROIT", " snayzyHELLO", " !", ""]
     message = MESSAGE_TO_SEND + random.choice(prefix)
     while not is_live_broadcast(TWITCH_CHANNEL):
         if index % 10 == 0:

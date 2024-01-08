@@ -6,11 +6,11 @@
 #    By: titouanck <chevrier.titouan@gmail.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/06 16:41:32 by titouanck         #+#    #+#              #
-#    Updated: 2024/01/08 06:49:19 by titouanck        ###   ########.fr        #
+#    Updated: 2024/01/08 15:36:40 by titouanck        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-import socket, time, os
+import socket, time, os, select
 from mod_files      import write_chat
 
 TWITCH_CHANNEL  = os.environ["TWITCH_CHANNEL"].lower()
@@ -36,7 +36,7 @@ def parse_irc_message(irc_message):
         username = irc_message[1:].split("!")[0]
         content = f"{username}: " + irc_message.split(f"PRIVMSG #{TWITCH_CHANNEL} :")[1]
     else:
-        content = None
+        content = irc_message
     return message_type, content
 
 # **************************************************************************** #
@@ -51,14 +51,17 @@ class IrcServer:
     
     def send_privmsg(self, message):
         self.socket.send(f"PRIVMSG #{TWITCH_CHANNEL} :{message}\n".encode("UTF-8"))
-        write_chat(f"{TWITCH_USERNAME}: {message}")
+        write_chat(f">> {TWITCH_USERNAME}: {message}")
 
     def send_pong(self, message):
-        self.socket.send(f"PONG :{message}\n".encode("UTF-8"))
-        write_chat(f"PONG: {content}")
+        r = self.socket.send(f"PONG :{message}\n".encode("UTF-8"))
+        write_chat(f">> /PONG {message}")
+        return r
+
+    def get_socket(self):
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     def connect(self):
-        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.connect(("irc.chat.twitch.tv", 6667))
 
         self.send_data(f"PASS oauth:{USER_TOKEN}")
@@ -67,15 +70,22 @@ class IrcServer:
 
     def listener(self):
         while True:
-            buffer = self.socket.recv(1024).decode("utf-8")
-            while "\n" in buffer:
-                splited_buffer = buffer.split("\n")
-                buffer = splited_buffer[1]
-                message_type, content = parse_irc_message(splited_buffer[0])
-                if message_type == "PRIVMSG":
-                    write_chat(content)
-                if message_type == "PING":
-                    write_chat(f"{message_type}: {content}")
-                    self.send_pong(content)
+            try:
+                response = self.socket.recv(1024).decode("utf-8")
+                while "\n" in response:
+                    splited_response = response.split("\n", 1)
+                    response = splited_response[1]
+                    message_type, content = parse_irc_message(splited_response[0])
+                    if message_type == "PRIVMSG":
+                        write_chat(f"<< {content}")
+                    else:
+                        if message_type != None:
+                            write_chat(f"<< /{message_type} {content}")
+                        else:
+                            write_chat(f"<< {content}")
+                        if message_type == "PING":
+                            self.send_pong(content)
+            except OSError as e:
+                self.connect()
 
 # **************************************************************************** #
