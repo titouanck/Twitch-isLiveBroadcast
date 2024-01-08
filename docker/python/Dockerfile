@@ -1,6 +1,6 @@
 FROM python
 
-RUN pip install requests bs4 twitchio
+RUN pip install requests
 
 RUN ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime
 RUN echo "Europe/Paris" > /etc/timezone
