@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    mod_files.py                                       :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: titouanck <chevrier.titouan@gmail.com>     +#+  +:+       +#+         #
+#    By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/06 12:45:06 by titouanck         #+#    #+#              #
-#    Updated: 2024/01/08 07:16:43 by titouanck        ###   ########.fr        #
+#    Updated: 2024/01/09 08:48:09 by tchevrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,7 +73,7 @@ def write_logs(str):
 def write_chat(str):
     if open_chat.date != get_date():
         open_chat.file_obj.close()
-        open_chat()
+        open_chat(TWITCH_CHANNEL)
     str = f"[{get_time()}] {str}"
     open_chat.file_obj.write(str + "\n")
     open_chat.file_obj.flush()

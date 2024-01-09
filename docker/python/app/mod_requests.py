@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    mod_requests.py                                    :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: titouanck <chevrier.titouan@gmail.com>     +#+  +:+       +#+         #
+#    By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/06 14:10:00 by titouanck         #+#    #+#              #
-#    Updated: 2024/01/06 22:00:47 by titouanck        ###   ########.fr        #
+#    Updated: 2024/01/09 23:55:08 by tchevrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,22 @@ def is_live_broadcast(user_login):
             return False
     else:
         write_logs(f"is_live_broadcast(): Error: {response.status_code}, {response.text}")
-        sys.exit(1)
+        is_live_broadcast.data = None
+
+def get_user_id(user_login):
+    endpoint = "/users"
+    params   = {'login': user_login}
+    headers  = {"Authorization": f"Bearer {USER_TOKEN}", "Client-ID": APP_ID}
+    
+    get_user_id.id = None
+    response = get_response(endpoint, params, headers)
+    if response.status_code == 200:
+        get_user_id.data = response.json()
+        if bool(get_user_id.data.get("data")) and bool(get_user_id.data["data"][0].get("id")):
+            get_user_id.id = get_user_id.data["data"][0]["id"]
+    else:
+        write_logs(f"get_user_id(): Error: {response.status_code}, {response.text}")
+        get_user_id.data = None
+    return get_user_id.id
 
 # **************************************************************************** #
