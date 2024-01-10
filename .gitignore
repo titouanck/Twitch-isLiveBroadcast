@@ -1,4 +1,4 @@
 .env
-channels/
+logs/
 __pycache__/
 draft
