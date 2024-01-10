@@ -12,8 +12,8 @@ all: stop check-env build run
 stop:
 	@if [ -n "$$(docker ps --filter ancestor=$(IMAGE) | grep $(IMAGE))" ]; then \
 		docker stop $$(docker ps --filter ancestor=$(IMAGE) -q); \
+		echo "\033[0;32m[✔️] All containers have been stopped\033[0m"; \
 	fi
-	@echo "\033[0;32m[✔️] All containers have been stopped\033[0m"
 
 build:
 	@mkdir -p logs/
@@ -34,7 +34,7 @@ run: $(mkdir-logs) $(check-characters) $(JSON_FILES:.json=.up)
 
 check-env:
 	@if [ ! -f $(ENV_FILE) ]; then \
-		echo "Preparing to create $(ENV_FILE) file..." && \
+		echo "\033[0;32mPreparing to create $(ENV_FILE) file...\033[0m"; \
 		printf "Get an oauth token at : \e[4m%s\e[0m\n" "https://titouanck.github.io/Twitch-messageOnLive/" && \
 		read -p "Enter USER_TOKEN: " user_token && \
 		echo "Creating $(ENV_FILE) file..." && \
