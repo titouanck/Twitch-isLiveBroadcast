@@ -2,7 +2,7 @@ version: '3'
 services:
 
   python:
-    container_name: mol_${JSON_FILE}
+    container_name: mol_${JSON_FILE_TRUNC}
     image: message_on_live:twitch
     build:
       context: ./
