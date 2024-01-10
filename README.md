@@ -78,6 +78,6 @@ Logs including **live status** and all **chat messages** are saved in the `/logs
 |<img width="829" alt="Screenshot 2024-01-10 at 20 50 34" src="https://github.com/titouanck/Twitch-messageOnLive/assets/87268044/9e870cf5-b41d-4418-a769-1ca506f15c02"> | <img width="827" alt="Screenshot 2024-01-10 at 20 41 03" src="https://github.com/titouanck/Twitch-messageOnLive/assets/87268044/79c6b081-3ab3-42d1-9bc7-7e13d5637691"> |
 
 ---
-### A little background on this mini-project
-When **kyzen_** launches his live stream, the first person to say "bonjour" is offered VIP status on his channel.  
-After several failed attempts to be the first to click on the stream start notification and say "bonjour", I thought it might be fun, and even a bit useful, to find a way of always being the first to say hi.
+### &nbsp;![vip](https://github.com/titouanck/Twitch-messageOnLive/assets/87268044/b0a8e39f-f7d4-4b5d-a21d-110feaf4340e)&nbsp; A little background on this mini-project &nbsp;![vip](https://github.com/titouanck/Twitch-messageOnLive/assets/87268044/b0a8e39f-f7d4-4b5d-a21d-110feaf4340e)&nbsp;
+When **kyzen_** launches his live stream, the first person to say **« bonjour »** is offered **VIP status** on his channel.  
+After several failed attempts to be the first to click on the stream start notification and say **« bonjour »**, I thought it might be fun, and even a bit useful, to find a way of always being the first to say hi.
