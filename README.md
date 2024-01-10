@@ -48,7 +48,7 @@ If your token no longer works, you can simply delete the **./docker/.env** file 
 ---
 ### We did it!
 You should now see something like that.  
-You don't ? It is possible that your docker installation requires you to be root to manipulate containers  .
+You don't ? It is possible that your docker installation requires you to be root to manipulate containers.  
 If so, use `make sudo` instead of `make`
 ```python
 Creating docker/.env file...
