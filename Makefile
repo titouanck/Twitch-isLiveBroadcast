@@ -15,6 +15,7 @@ stop:
 
 build:
 	@mkdir -p logs/
+	@docker pull python:alpine3.19
 	@docker-compose -f $(DOCKER_COMPOSE_FILE) build
 	@echo "\033[0;32m[✔️] docker-compose built successfully\033[0m"
 

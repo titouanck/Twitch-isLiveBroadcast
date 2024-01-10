@@ -6,11 +6,11 @@
 #    By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/06 14:10:00 by titouanck         #+#    #+#              #
-#    Updated: 2024/01/10 08:07:45 by tchevrie         ###   ########.fr        #
+#    Updated: 2024/01/10 16:30:50 by tchevrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-import sys, os, requests
+import sys, os, requests, time
 
 API_URL    = "https://api.twitch.tv/helix"
 APP_ID     = os.environ["APP_ID"]
@@ -37,8 +37,8 @@ def is_live_broadcast(user_login):
         else:
             return False
     else:
-        write_logs(f"is_live_broadcast(): Error: {response.status_code}, {response.text}")
         is_live_broadcast.data = None
+        raise Exception(f"is_live_broadcast(): Error: {response.status_code}, {response.text}")
 
 def get_username():
     endpoint = "/users"
@@ -53,6 +53,7 @@ def get_username():
             get_username.login = get_username.data["data"][0]["login"]
     else:
         get_username.data = None
+        raise Exception(f"get_username(): Error: {response.status_code}, {response.text}")
     return get_username.login
 
 # **************************************************************************** #

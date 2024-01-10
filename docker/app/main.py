@@ -6,7 +6,7 @@
 #    By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/06 13:26:34 by titouanck         #+#    #+#              #
-#    Updated: 2024/01/10 09:41:43 by tchevrie         ###   ########.fr        #
+#    Updated: 2024/01/10 16:33:27 by tchevrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,10 +41,13 @@ def main():
 
 def routine():
     while True:
-        if is_live_broadcast(get_data.channel_to_monitor):
-            is_online()
-        else:
-            is_offline()
+        try:
+            if is_live_broadcast(get_data.channel_to_monitor):
+                is_online()
+            else:
+                is_offline()
+        except Exception as e:
+            write_logs(e)
 
 def is_online():
     title        = is_live_broadcast.data['data'][0]['title']
@@ -57,18 +60,21 @@ def is_online():
 def is_offline():
     time_to_sleep = 60
     index = 0
-    while not is_live_broadcast(get_data.channel_to_monitor):
-        if index % 10 == 0:
-            write_logs(f"{get_data.channel_to_monitor} is currently offline.")
-        time.sleep(0.2)
-        index += 1
-    write_logs(get_data.channel_to_monitor + " just went LIVE!")
-    for message in get_data.messages_to_send:
-        main.irc_server.send_privmsg(message)
-        time.sleep(get_data.cooldown_between_messages)
-        time_to_sleep -= get_data.cooldown_between_messages;
-    if time_to_sleep > 0:
-        time.sleep(time_to_sleep)
+    try:
+        while not is_live_broadcast(get_data.channel_to_monitor):
+            if index % 10 == 0:
+                write_logs(f"{get_data.channel_to_monitor} is currently offline.")
+            time.sleep(0.2)
+            index += 1
+        write_logs(get_data.channel_to_monitor + " just went LIVE!")
+        for message in get_data.messages_to_send:
+            main.irc_server.send_privmsg(message)
+            time.sleep(get_data.cooldown_between_messages)
+            time_to_sleep -= get_data.cooldown_between_messages;
+        if time_to_sleep > 0:
+            time.sleep(time_to_sleep)
+    except Exception as e:
+        write_logs(e)
 
 # **************************************************************************** #
 
