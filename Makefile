@@ -18,6 +18,9 @@ stop:
 build:
 	@mkdir -p logs/
 	@docker pull python:alpine3.19
+	@echo           "########################################################################################"
+	@echo "\033[0;33mIN CASE OF DOCKER PERMISSION DENIED, USE RULES: sudo, sudo-stop, sudo-build, et sudo-run\033[0m"
+	@echo           "########################################################################################"
 	@docker-compose -f $(DOCKER_COMPOSE_FILE) build
 	@echo "\033[0;32m[✔️] docker-compose built successfully\033[0m"
 
@@ -47,14 +50,23 @@ check-characters:
 		exit 1; \
 	fi
 
-############################################################################
-
 mkdir-logs:
 	@mkdir -p logs/
 
 
+############################################################################
+
 sudo: mkdir-logs
 	sudo make all
+
+sudo-stop: mkdir-logs
+	sudo make stop
+
+sudo-build: mkdir-logs
+	sudo make build
+
+sudo-run: mkdir-logs
+	sudo make run
 
 ############################################################################
 
