@@ -6,12 +6,11 @@
 #    By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/06 14:10:00 by titouanck         #+#    #+#              #
-#    Updated: 2024/01/09 23:55:08 by tchevrie         ###   ########.fr        #
+#    Updated: 2024/01/10 08:07:45 by tchevrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 import sys, os, requests
-from mod_files import write_logs, write_chat
 
 API_URL    = "https://api.twitch.tv/helix"
 APP_ID     = os.environ["APP_ID"]
@@ -41,20 +40,19 @@ def is_live_broadcast(user_login):
         write_logs(f"is_live_broadcast(): Error: {response.status_code}, {response.text}")
         is_live_broadcast.data = None
 
-def get_user_id(user_login):
+def get_username():
     endpoint = "/users"
-    params   = {'login': user_login}
+    params   = {}
     headers  = {"Authorization": f"Bearer {USER_TOKEN}", "Client-ID": APP_ID}
     
-    get_user_id.id = None
+    get_username.login = None
     response = get_response(endpoint, params, headers)
     if response.status_code == 200:
-        get_user_id.data = response.json()
-        if bool(get_user_id.data.get("data")) and bool(get_user_id.data["data"][0].get("id")):
-            get_user_id.id = get_user_id.data["data"][0]["id"]
+        get_username.data = response.json()
+        if bool(get_username.data.get("data")) and bool(get_username.data["data"][0].get("login")):
+            get_username.login = get_username.data["data"][0]["login"]
     else:
-        write_logs(f"get_user_id(): Error: {response.status_code}, {response.text}")
-        get_user_id.data = None
-    return get_user_id.id
+        get_username.data = None
+    return get_username.login
 
 # **************************************************************************** #

@@ -6,17 +6,18 @@
 #    By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/06 12:45:06 by titouanck         #+#    #+#              #
-#    Updated: 2024/01/09 08:48:09 by tchevrie         ###   ########.fr        #
+#    Updated: 2024/01/10 08:42:39 by tchevrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 import os
-from mod_time import get_date, get_time
+from mod_time       import get_date, get_time
+from mod_requests   import get_username
+from mod_data       import get_data
 
 PATH_DIRECTORY = "./channels"
 LOGS_DIRECTORY = "logs"
 CHAT_DIRECTORY = "chat"
-TWITCH_CHANNEL = os.environ["TWITCH_CHANNEL"].lower()
 
 # **************************************************************************** #
 
@@ -35,24 +36,24 @@ def open_file(filename):
 
 # **************************************************************************** #
 
-def open_logs(twitch_channel):
-    parent_directory = PATH_DIRECTORY + '/' + twitch_channel + '/' + LOGS_DIRECTORY
+def open_logs(filename):
+    parent_directory = PATH_DIRECTORY + '/' + filename + '/' + LOGS_DIRECTORY
     if not os.path.exists(parent_directory):
         os.makedirs(parent_directory)
+    os.chmod(PATH_DIRECTORY + '/' + filename, 0o777)
     os.chmod(parent_directory, 0o777)
-    os.chmod(parent_directory.rstrip('/' + LOGS_DIRECTORY), 0o777)
 
     open_logs.date     = get_date()
     open_logs.filename = parent_directory + '/' + open_logs.date + ".log"
     open_logs.file_obj = open_file(open_logs.filename)
     return open_logs.file_obj
 
-def open_chat(twitch_channel):
-    parent_directory = PATH_DIRECTORY + '/' + twitch_channel + '/' + CHAT_DIRECTORY
+def open_chat(filename):
+    parent_directory = PATH_DIRECTORY + '/' + filename + '/' + CHAT_DIRECTORY
     if not os.path.exists(parent_directory):
         os.makedirs(parent_directory)
+    os.chmod(PATH_DIRECTORY + '/' + filename, 0o777)
     os.chmod(parent_directory, 0o777)
-    os.chmod(parent_directory.rstrip('/' + CHAT_DIRECTORY), 0o777)
 
     open_chat.date     = get_date()
     open_chat.filename = parent_directory + '/' + open_chat.date + ".log"
@@ -64,7 +65,7 @@ def open_chat(twitch_channel):
 def write_logs(str):
     if open_logs.date != get_date():
         open_logs.file_obj.close()
-        open_logs(TWITCH_CHANNEL)
+        open_logs(get_data.channel_to_monitor)
     str = f"[{get_time()}] {str}"
     open_logs.file_obj.write(str + "\n")
     open_logs.file_obj.flush()
@@ -73,7 +74,7 @@ def write_logs(str):
 def write_chat(str):
     if open_chat.date != get_date():
         open_chat.file_obj.close()
-        open_chat(TWITCH_CHANNEL)
+        open_chat(get_data.channel_to_monitor)
     str = f"[{get_time()}] {str}"
     open_chat.file_obj.write(str + "\n")
     open_chat.file_obj.flush()

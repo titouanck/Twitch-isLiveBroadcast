@@ -6,57 +6,25 @@
 #    By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/06 16:41:32 by titouanck         #+#    #+#              #
-#    Updated: 2024/01/08 23:31:46 by tchevrie         ###   ########.fr        #
+#    Updated: 2024/01/10 07:59:34 by tchevrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 import socket, time, os, select
 from mod_files      import write_chat
+from mod_requests   import get_username
 
-TWITCH_CHANNEL  = os.environ["TWITCH_CHANNEL"].lower()
-TWITCH_USERNAME = os.environ["TWITCH_USERNAME"].lower()
 USER_TOKEN      = os.environ["USER_TOKEN"]
-
-# **************************************************************************** #
-
-def parse_irc_message(irc_message):
-    messages     = ["NOTICE", "PART", "PING", "PRIVMSG"]
-    index        = None
-    message_type = None
-    
-    for some_message in messages:
-        if some_message in irc_message:
-            length = len(irc_message.split(some_message)[0])
-            if index is None or length < index:
-                message_type = some_message
-                index = length
-    if message_type == "PING":
-        content = irc_message.split("PING :")[1]
-    elif message_type == "PRIVMSG":
-        username = irc_message[1:].split("!")[0]
-        content = f"{username}: " + irc_message.split(f"PRIVMSG #{TWITCH_CHANNEL} :")[1]
-    else:
-        content = irc_message
-    return message_type, content
+TWITCH_USERNAME = get_username()
 
 # **************************************************************************** #
 
 class IrcServer:
 
-    def __init__(self):
+    def __init__(self, channel):
         self.socket = None
+        self.channel = channel
     
-    def send_data(self, command):
-        self.socket.send((command + '\n').encode("UTF-8"))
-    
-    def send_privmsg(self, message):
-        self.socket.send(f"PRIVMSG #{TWITCH_CHANNEL} :{message}\n".encode("UTF-8"))
-        write_chat(f">> {TWITCH_USERNAME}: {message}")
-
-    def send_pong(self, message):
-        self.socket.send(f"PONG :{message}\n".encode("UTF-8"))
-        write_chat(f">> /PONG {message}")
-
     def get_socket(self):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -65,7 +33,38 @@ class IrcServer:
 
         self.send_data(f"PASS oauth:{USER_TOKEN}")
         self.send_data(f"NICK {TWITCH_USERNAME}")
-        self.send_data(f"JOIN #{TWITCH_CHANNEL}")
+        self.send_data(f"JOIN #{self.channel}")
+    
+    def parse(self, irc_message):
+        messages     = ["PING", "PRIVMSG"]
+        index        = None
+        message_type = None
+        
+        for some_message in messages:
+            if some_message in irc_message:
+                length = len(irc_message.split(some_message)[0])
+                if index is None or length < index:
+                    message_type = some_message
+                    index = length
+        if message_type == "PING":
+            content = irc_message.split("PING :")[1]
+        elif message_type == "PRIVMSG":
+            username = irc_message[1:].split("!")[0]
+            content = f"{username}: " + irc_message.split(f"PRIVMSG #{self.channel} :")[1]
+        else:
+            content = irc_message
+        return message_type, content
+
+    def send_data(self, data):
+        self.socket.send((data + '\n').encode("UTF-8"))
+
+    def send_privmsg(self, message):
+        self.send_data(f"PRIVMSG #{self.channel} :{message}")
+        write_chat(f">> {TWITCH_USERNAME}: {message}")
+
+    def send_pong(self, message):
+        self.send_data(f"PONG :{message}")
+        write_chat(f">> /PONG {message}")
 
     def listener(self):
         while True:
@@ -74,7 +73,7 @@ class IrcServer:
                 while "\n" in response:
                     splited_response = response.split("\n", 1)
                     response = splited_response[1]
-                    message_type, content = parse_irc_message(splited_response[0])
+                    message_type, content = self.parse(splited_response[0])
                     if message_type == "PRIVMSG":
                         write_chat(f"<< {content}")
                     else:

@@ -2,15 +2,10 @@ version: '3'
 services:
 
   python:
-    container_name: python_${TWITCH_CHANNEL}
     build:
-      context: ./python
-    image: islivebroadcast:2.0
+      context: ./
     volumes:
       - ../channels:/app/channels
     environment:
-      - TWITCH_CHANNEL=${TWITCH_CHANNEL}
-      - TWITCH_USERNAME=${TWITCH_USERNAME}
-      - MESSAGE_TO_SEND=${MESSAGE_TO_SEND}
       - APP_ID=${APP_ID}
       - USER_TOKEN=${USER_TOKEN}

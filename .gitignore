@@ -5,4 +5,5 @@ channels/
 alternative/
 __pycache__/
 draft
-list_data.json
+watchlist
+data.json
