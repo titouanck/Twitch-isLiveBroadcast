@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="web/style.css">
+	<title>Document</title>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	<script type="text/javascript" language="javascript">
+		$(document).ready(function() {
+			var oauthHash = location.hash.substr(1);
+			var accessToken = getAccessToken(oauthHash);
+
+			if (accessToken) {
+				handleAccessToken(accessToken);
+			}
+		});
+
+		function getAccessToken(hash) {
+			return hash.includes('access_token=') ? hash.split('&')[0].split('=')[1] : null;
+		}
+
+		function handleAccessToken(token) {
+			console.log(token);
+			$("#link_to_connect").hide();
+
+			var tokenElement = document.getElementById('token');
+			var tokenInputElement = document.getElementById('token-input');
+
+			if (tokenElement) {
+				tokenElement.style.position = 'relative';
+				tokenElement.style.visibility = 'visible';
+			} else {
+				console.error('L\'élément avec l\'ID "token" n\'a pas été trouvé.');
+			}
+
+			if (tokenInputElement) {
+				setInterval(() => {
+					if (tokenInputElement.value !== token) {
+						tokenInputElement.value = token;
+					}
+				}, 100);
+			} else {
+				console.error('L\'élément avec l\'ID "token-input" n\'a pas été trouvé.');
+			}
+		}
+	</script>
+</head>
+<body>
+	<div id="token">
+		<label for="token-input">Newly generated oauth token</label>
+		<input type="token-input" id="token-input" name="token-input">
+	</div>
+	<main>
+		<a id="link_to_connect" href="https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=qn9dgxv87jm94tkdufaruuhq52nqz3&redirect_uri=http://localhost:8080/index.html&scope=chat:read+chat:edit">> CONNECT YOUR TWITCH ACCOUNT <<</a>
+	</main>
+	<p id="top-p">To revoke access, disconnect <strong>messageOnLive</strong> from your <a href="https://www.twitch.tv/settings/connections">Twitch settings</a></p>
+</body>
+</html>
