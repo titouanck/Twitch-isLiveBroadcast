@@ -1,6 +1,0 @@
-{
-	"twitch_channel_to_monitor": "podasai",
-	"twitch_channel_to_send_message": "podasai",
-	"messages_to_send": ["bonjour snayzyHELLO", "comment ça va"],
-	"cooldown_between_messages": 6
-}

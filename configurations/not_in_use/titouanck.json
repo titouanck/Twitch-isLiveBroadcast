@@ -1,6 +1,0 @@
-{
-	"twitch_channel_to_monitor": "titouanck",
-	"twitch_channel_to_send_message": "titouanck",
-	"messages_to_send": ["bonjour"],
-	"cooldown_between_messages": 6
-}
