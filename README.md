@@ -73,3 +73,8 @@ Starting mol_snayzy ... done
 echo "Launching docker-compose up for snayzy.json"
 Launching docker-compose up for snayzy.json
 ```
+
+|           |           |
+|-----------|-----------|
+|<img width="829" alt="Screenshot 2024-01-10 at 20 50 34" src="https://github.com/titouanck/Twitch-messageOnLive/assets/87268044/9e870cf5-b41d-4418-a769-1ca506f15c02"> | <img width="827" alt="Screenshot 2024-01-10 at 20 41 03" src="https://github.com/titouanck/Twitch-messageOnLive/assets/87268044/79c6b081-3ab3-42d1-9bc7-7e13d5637691">
+ |
