@@ -30,7 +30,9 @@ For example, with `kyzen_.json` I want to send two defined messages on **kyzen_*
 make
 ```
 
-<img width="667" alt="Screenshot 2024-01-10 at 19 48 58" src="https://github.com/titouanck/Twitch-messageOnLive/assets/87268044/b205b45f-4129-4d0f-a6e7-9daa18482bc8">    
+<img width="667" alt="Screenshot 2024-01-10 at 19 48 58" src="https://github.com/titouanck/Twitch-messageOnLive/assets/87268044/b205b45f-4129-4d0f-a6e7-9daa18482bc8">
+  
+
 After typing `make`, follow the link to obtain an oauth user token, which will only be stored locally in an .env file  
 
 |           |           |
