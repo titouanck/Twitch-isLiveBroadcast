@@ -23,7 +23,8 @@ build:
 
 check-env:
 	@if [ ! -f $(ENV_FILE) ]; then \
-		echo "Creating $(ENV_FILE) file..." && \
+		echo "Preparing to create $(ENV_FILE) file..." && \
+		printf "Get an oauth token at : \e[4m%s\e[0m\n" "https://titouanck.github.io/Twitch-messageOnLive/" && \
 		read -p "Enter USER_TOKEN: " user_token && \
 		echo "Creating $(ENV_FILE) file..." && \
 		echo "APP_ID=$(APP_ID)" > $(ENV_FILE) && \
