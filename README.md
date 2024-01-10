@@ -43,6 +43,8 @@ Copy and paste the authentication token into the terminal, and press enter
   
 <img width="670" alt="Screenshot 2024-01-10 at 20 11 31" src="https://github.com/titouanck/Twitch-messageOnLive/assets/87268044/e8b4f485-fbbc-4f0a-82c7-fc1916569c6e">
 
+If your token no longer works, you can simply delete the **./docker/.env** file and type `make` again.
+
 ---
 ### We did it!
 You should now see something like that.  
