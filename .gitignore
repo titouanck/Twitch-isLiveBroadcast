@@ -1,8 +1,8 @@
-.env
-channels/
-__pycache__/
-get_token.md
-alternative/
-script.sh
-*.env
 env
+.env
+*.env
+channels/
+alternative/
+__pycache__/
+draft
+list_data.json
