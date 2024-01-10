@@ -1,11 +1,13 @@
 JSON_FILES 			= $(wildcard configurations/*.json)
 JSON_FILE_NOTDIR 	= $(notdir $(wildcard configurations/*.json))
+ENV_FILE			= docker/.env
 IMAGE				= message_on_live:twitch
 DOCKER_COMPOSE_FILE	= docker/docker-compose.yml
+APP_ID				= qn9dgxv87jm94tkdufaruuhq52nqz3
 
 ############################################################################
 
-all: stop build run
+all: stop check-env build run
 
 stop:
 	@if [ -n "$$(docker ps --filter ancestor=$(IMAGE) | grep $(IMAGE))" ]; then \
@@ -18,6 +20,17 @@ build:
 	@docker pull python:alpine3.19
 	@docker-compose -f $(DOCKER_COMPOSE_FILE) build
 	@echo "\033[0;32m[✔️] docker-compose built successfully\033[0m"
+
+check-env:
+	@if [ ! -f $(ENV_FILE) ]; then \
+		echo "Creating $(ENV_FILE) file..." && \
+		read -p "Enter USER_TOKEN: " user_token && \
+		echo "Creating $(ENV_FILE) file..." && \
+		echo "APP_ID=$(APP_ID)" > $(ENV_FILE) && \
+		echo "USER_TOKEN=$$user_token" >> $(ENV_FILE); \
+	else \
+		echo "\033[0;32m$(ENV_FILE) already exists.\033[0m"; \
+	fi
 
 check-characters:
 	@if find configurations -name '*.json' -exec basename {} .json \; | cat | grep -q '[^[:alnum:]_-]'; then \
