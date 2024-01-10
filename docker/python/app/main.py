@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    main.py                                            :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: titouanck <chevrier.titouan@gmail.com>     +#+  +:+       +#+         #
+#    By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/06 13:26:34 by titouanck         #+#    #+#              #
-#    Updated: 2024/01/08 15:50:45 by titouanck        ###   ########.fr        #
+#    Updated: 2024/01/10 02:02:22 by tchevrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,7 @@ def is_online():
 
 def is_offline():
     index = 0
-    prefix = [" podaBRASGAUCHE", " podaBRASDROIT", " snayzyHELLO", " !", ""]
+    prefix = [" snayzyHELLO"]
     message = MESSAGE_TO_SEND + random.choice(prefix)
     while not is_live_broadcast(TWITCH_CHANNEL):
         if index % 10 == 0:
@@ -58,6 +58,8 @@ def is_offline():
         time.sleep(0.2)
         index += 1
     main.irc_server.send_privmsg(message)
+    time.sleep(6)
+    main.irc_server.send_privmsg("comment ça va")
     write_logs(TWITCH_CHANNEL + " just went LIVE!")
     time.sleep(60)
 

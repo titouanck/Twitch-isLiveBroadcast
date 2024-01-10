@@ -4,3 +4,5 @@ __pycache__/
 get_token.md
 alternative/
 script.sh
+*.env
+env

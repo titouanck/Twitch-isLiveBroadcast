@@ -24,7 +24,7 @@ build:
 
 run:
 	@mkdir -p channels/
-	@docker-compose -f $(path_dockercompose) up -d
+	@docker-compose -f $(path_dockercompose) --env-file env/kyzen_.env up -d
 
 exec:
 	@docker exec -it $(pythonContainer) sh
