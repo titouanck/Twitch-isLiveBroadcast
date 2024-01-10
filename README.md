@@ -33,13 +33,13 @@ make
 <img width="667" alt="Screenshot 2024-01-10 at 19 48 58" src="https://github.com/titouanck/Twitch-messageOnLive/assets/87268044/b205b45f-4129-4d0f-a6e7-9daa18482bc8">
   
 
-After typing `make`, follow the link to obtain an oauth user token, which will only be stored locally in an .env file  
+After typing `make`, follow the link to obtain an oauth user token, which will only be stored locally in an .env file.  
 
 |           |           |
 |-----------|-----------|
 |  <img width="563" alt="Screenshot 2024-01-10 at 20 01 47" src="https://github.com/titouanck/Twitch-messageOnLive/assets/87268044/fcf7d8e0-d640-470f-81f7-5b1b377fbe66"> |  <img width="359" alt="Screenshot 2024-01-10 at 19 56 37" src="https://github.com/titouanck/Twitch-messageOnLive/assets/87268044/7794b3c2-fb86-441b-b19d-c821ea25ba4e">
 
-Copy and paste the authentication token into the terminal, and press enter  
+Copy and paste the authentication token into the terminal, and press enter.  
   
 <img width="670" alt="Screenshot 2024-01-10 at 20 11 31" src="https://github.com/titouanck/Twitch-messageOnLive/assets/87268044/e8b4f485-fbbc-4f0a-82c7-fc1916569c6e">
 
@@ -48,7 +48,7 @@ If your token no longer works, you can simply delete the **./docker/.env** file 
 ---
 ### We did it!
 You should now see something like that.  
-You don't ? It is possible that your docker installation requires you to be root to manipulate containers  
+You don't ? It is possible that your docker installation requires you to be root to manipulate containers  .
 If so, use `make sudo` instead of `make`
 ```python
 Creating docker/.env file...
@@ -73,8 +73,9 @@ Starting mol_snayzy ... done
 echo "Launching docker-compose up for snayzy.json"
 Launching docker-compose up for snayzy.json
 ```
-
+---
+### Constant logs
+Logs including **live status** and all **chat messages** are saved in the `/logs` directory for as long as the program is running.  
 |           |           |
 |-----------|-----------|
-|<img width="829" alt="Screenshot 2024-01-10 at 20 50 34" src="https://github.com/titouanck/Twitch-messageOnLive/assets/87268044/9e870cf5-b41d-4418-a769-1ca506f15c02"> | <img width="827" alt="Screenshot 2024-01-10 at 20 41 03" src="https://github.com/titouanck/Twitch-messageOnLive/assets/87268044/79c6b081-3ab3-42d1-9bc7-7e13d5637691">
- |
+|<img width="829" alt="Screenshot 2024-01-10 at 20 50 34" src="https://github.com/titouanck/Twitch-messageOnLive/assets/87268044/9e870cf5-b41d-4418-a769-1ca506f15c02"> | <img width="827" alt="Screenshot 2024-01-10 at 20 41 03" src="https://github.com/titouanck/Twitch-messageOnLive/assets/87268044/79c6b081-3ab3-42d1-9bc7-7e13d5637691"> |
