@@ -27,7 +27,7 @@ build:
 run: $(mkdir-logs) $(check-characters) $(JSON_FILES:.json=.up)
 
 %.up: %.json
-	echo "Launching docker-compose up for $(notdir $<)"
+	@echo "Launching docker-compose up for $(notdir $<)"
 	$(shell export JSON_FILE=$(notdir $<) JSON_FILE_TRUNC=$$(echo $(notdir $<) | sed 's/\.json//g') && docker-compose -p mol_$$(echo $(notdir $<) | sed 's/\.json//g') -f $(DOCKER_COMPOSE_FILE) up -d)
 
 ############################################################################
