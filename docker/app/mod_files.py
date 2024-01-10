@@ -6,7 +6,7 @@
 #    By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/06 12:45:06 by titouanck         #+#    #+#              #
-#    Updated: 2024/01/10 08:42:39 by tchevrie         ###   ########.fr        #
+#    Updated: 2024/01/10 15:33:43 by tchevrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ from mod_time       import get_date, get_time
 from mod_requests   import get_username
 from mod_data       import get_data
 
-PATH_DIRECTORY = "./channels"
+PATH_DIRECTORY = "./logs"
 LOGS_DIRECTORY = "logs"
 CHAT_DIRECTORY = "chat"
 

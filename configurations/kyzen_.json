@@ -1,0 +1,6 @@
+{
+	"twitch_channel_to_monitor": "kyzen_",
+	"twitch_channel_to_send_message": "kyzen_",
+	"messages_to_send": ["bonjour ikyzenDanse", "comment ça va"],
+	"cooldown_between_messages": 6
+}

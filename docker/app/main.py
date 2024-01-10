@@ -6,15 +6,17 @@
 #    By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/06 13:26:34 by titouanck         #+#    #+#              #
-#    Updated: 2024/01/10 08:47:21 by tchevrie         ###   ########.fr        #
+#    Updated: 2024/01/10 09:41:43 by tchevrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-import time, os, random, threading
+import time, os, random, threading, sys
 from mod_files      import open_logs, open_chat, write_logs, write_chat
 from mod_requests   import is_live_broadcast, get_username
 from mod_irc        import IrcServer
 from mod_data       import get_data
+
+JSON_FILENAME = os.environ["JSON_FILE"].rstrip(".json")
 
 # **************************************************************************** #
 
@@ -23,9 +25,10 @@ def main():
         get_data()
     except Exception as e:
         print(e)
+        sys.exit(1)
     print(get_data.channel_to_monitor)
-    open_logs(f"{get_data.channel_to_monitor}->{get_data.channel_to_send_message}")
-    open_chat(f"{get_data.channel_to_monitor}->{get_data.channel_to_send_message}")
+    open_logs(JSON_FILENAME)
+    open_chat(JSON_FILENAME)
     main.irc_server = IrcServer(get_data.channel_to_send_message)
     main.irc_server.get_socket()
     main.irc_server.connect()

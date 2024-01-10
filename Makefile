@@ -1,42 +1,38 @@
-user				= $(shell whoami)
-pythonContainer		= pythonCompose
-path_dockercompose	= docker/docker-compose.yml
-__pycache__			= ./docker/app/__pycache__
+JSON_FILES 			= $(wildcard configurations/*.json)
+JSON_FILE_NOTDIR 	= $(notdir $(wildcard configurations/*.json))
+IMAGE				= message_on_live:twitch
+DOCKER_COMPOSE_FILE	= docker/docker-compose.yml
 
 ############################################################################
 
 all: stop build run
 
 stop:
-	@if [ -n "$$(docker ps | grep $(pythonContainer))" ]; then \
-		docker stop $(pythonContainer); \
+	@if [ -n "$$(docker ps --filter ancestor=$(IMAGE) | grep $(IMAGE))" ]; then \
+		docker stop $$(docker ps --filter ancestor=$(IMAGE) -q); \
 	fi
-	@echo "\033[0;32m[✔️] Inception containers have been stopped\033[0m"
-
-down:
-	@if [ -n "$$(docker ps -a | grep $(pythonContainer))" ]; then \
-		docker-compose -f docker/docker-compose.yml down; \
-	fi
+	@echo "\033[0;32m[✔️] All containers have been stopped\033[0m"
 
 build:
-	@docker-compose -f $(path_dockercompose) build
+	@mkdir -p logs/
+	@docker-compose -f $(DOCKER_COMPOSE_FILE) build
 	@echo "\033[0;32m[✔️] docker-compose built successfully\033[0m"
 
-run:
-	@mkdir -p channels/
-	@docker-compose -f $(path_dockercompose) --env-file env/credentials.env up -d
+check-characters:
+	@if find configurations -name '*.json' -exec basename {} .json \; | cat | grep -q '[^[:alnum:]_-]'; then \
+        echo "\033[0;31m[X] At least one invalid .json filename, use only [a-z, A-Z, 0-9, _, -]\033[0m"; \
+		exit 1; \
+	fi
 
-exec:
-	@docker exec -it $(pythonContainer) sh
+mkdir-logs:
+	@mkdir -p logs/
 
-re: down build run
+run: $(mkdir-logs) $(check-characters) $(JSON_FILES:.json=.up)
 
-container_logs:
-	@docker logs -f $(pythonContainer)
+%.up: %.json
+	echo "Launching docker-compose up for $(notdir $<)"
+	$(shell export JSON_FILE=$(notdir $<) && docker-compose -p mol_$(notdir $<) -f $(DOCKER_COMPOSE_FILE) up -d)
 
-clean: stop
-	rm -rf channels $(__pycache__)
-
-.PHONY: all stop down build run exec container_logs clean re
+.PHONY: all stop build run check-characters mkdir-logs
 
 ############################################################################
