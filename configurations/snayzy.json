@@ -1,6 +1,6 @@
 {
-	"twitch_channel_to_monitor": "snayzy",
-	"twitch_channel_to_send_message": "snayzy",
+	"channel_to_monitor": "snayzy",
+	"channel_to_send_message": "snayzy",
 	"messages_to_send": ["bonjour snayzyHELLO", "comment ça va"],
 	"cooldown_between_messages": 6
 }
