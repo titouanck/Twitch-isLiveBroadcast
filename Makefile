@@ -13,6 +13,11 @@ stop:
 	fi
 	@echo "\033[0;32m[✔️] Inception containers have been stopped\033[0m"
 
+down:
+	@if [ -n "$$(docker ps -a | grep $(pythonContainer))" ]; then \
+		docker-compose -f docker/docker-compose.yml down; \
+	fi
+
 build:
 	@docker-compose -f $(path_dockercompose) build
 	@echo "\033[0;32m[✔️] docker-compose built successfully\033[0m"
@@ -24,12 +29,14 @@ run:
 exec:
 	@docker exec -it $(pythonContainer) sh
 
+re: down build run
+
 container_logs:
 	@docker logs -f $(pythonContainer)
 
 clean: stop
 	rm -rf channels $(__pycache__)
 
-.PHONY: all stop build run exec container_logs clean
+.PHONY: all stop down build run exec container_logs clean re
 
 ############################################################################
