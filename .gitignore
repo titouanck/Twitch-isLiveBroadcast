@@ -1,5 +1,5 @@
-env
+.env
 channels/
 __pycache__/
 draft
-data.json
+*.json

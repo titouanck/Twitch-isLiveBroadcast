@@ -6,6 +6,8 @@ services:
       context: ./
     volumes:
       - ../channels:/app/channels
+    env_file:
+      - .env
     environment:
       - APP_ID=${APP_ID}
       - USER_TOKEN=${USER_TOKEN}
