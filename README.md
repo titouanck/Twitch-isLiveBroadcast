@@ -64,13 +64,10 @@ WARNING: The JSON_FILE variable is not set. Defaulting to a blank string.
 
 [✔️] docker-compose built successfully
 Starting mol_kyzen_ ... done
-echo "Launching docker-compose up for kyzen_.json"
 Launching docker-compose up for kyzen_.json
 Starting mol_podasai ... done
-echo "Launching docker-compose up for podasai.json"
 Launching docker-compose up for podasai.json
 Starting mol_snayzy ... done
-echo "Launching docker-compose up for snayzy.json"
 Launching docker-compose up for snayzy.json
 ```
 ---
