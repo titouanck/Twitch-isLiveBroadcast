@@ -21,6 +21,14 @@ build:
 	@docker-compose -f $(DOCKER_COMPOSE_FILE) build
 	@echo "\033[0;32m[✔️] docker-compose built successfully\033[0m"
 
+run: $(mkdir-logs) $(check-characters) $(JSON_FILES:.json=.up)
+
+%.up: %.json
+	echo "Launching docker-compose up for $(notdir $<)"
+	$(shell export JSON_FILE=$(notdir $<) JSON_FILE_TRUNC=$$(echo $(notdir $<) | sed 's/\.json//g') && docker-compose -p mol_$$(echo $(notdir $<) | sed 's/\.json//g') -f $(DOCKER_COMPOSE_FILE) up -d)
+
+############################################################################
+
 check-env:
 	@if [ ! -f $(ENV_FILE) ]; then \
 		echo "Preparing to create $(ENV_FILE) file..." && \
@@ -39,14 +47,16 @@ check-characters:
 		exit 1; \
 	fi
 
+############################################################################
+
 mkdir-logs:
 	@mkdir -p logs/
 
-run: $(mkdir-logs) $(check-characters) $(JSON_FILES:.json=.up)
 
-%.up: %.json
-	echo "Launching docker-compose up for $(notdir $<)"
-	$(shell export JSON_FILE=$(notdir $<) JSON_FILE_TRUNC=$$(echo $(notdir $<) | sed 's/\.json//g') && docker-compose -p mol_$$(echo $(notdir $<) | sed 's/\.json//g') -f $(DOCKER_COMPOSE_FILE) up -d)
+sudo: mkdir-logs
+	sudo make all
+
+############################################################################
 
 .PHONY: all stop build run check-characters mkdir-logs
 
