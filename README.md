@@ -5,7 +5,7 @@ In each container, a python program performs the following pseudo-code:
 when CHANNEL_TO_MONITOR goes live:
   for MESSAGE in MESSAGES_TO_SEND:
     send MESSAGE on the chat of CHANNEL_TO_SEND_MESSAGE
-    time.sleep(COOLDOWN_BETWEEN_MESSAGES)
+    sleep(COOLDOWN_BETWEEN_MESSAGES)
 ```
 ---
 ### Clone the project
