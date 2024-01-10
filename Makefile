@@ -1,7 +1,7 @@
 user				= $(shell whoami)
 pythonContainer		= pythonCompose
 path_dockercompose	= docker/docker-compose.yml
-__pycache__			= ./docker/python/app/__pycache__
+__pycache__			= ./docker/app/__pycache__
 
 ############################################################################
 

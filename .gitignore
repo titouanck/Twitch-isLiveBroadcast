@@ -1,9 +1,5 @@
 env
-.env
-*.env
 channels/
-alternative/
 __pycache__/
 draft
-watchlist
 data.json
