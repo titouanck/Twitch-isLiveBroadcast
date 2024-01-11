@@ -6,7 +6,7 @@
 #    By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/11 04:01:15 by tchevrie          #+#    #+#              #
-#    Updated: 2024/01/11 04:54:32 by tchevrie         ###   ########.fr        #
+#    Updated: 2024/01/11 12:12:35 by tchevrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ from mod_files      import open_clip, write_logs
 
 def get_clip(channel):
     try:
-        time.sleep(25)
+        time.sleep(21)
         clip_id = create_clip(channel)
         time.sleep(5)
         clip_url = get_clip_url(clip_id)
