@@ -3,16 +3,20 @@ The program will use the .json files provided, and launch X docker containers, e
 In each container, a python program performs the following pseudo-code:  
 ```python
 when CHANNEL_TO_MONITOR goes live:
-  for MESSAGE in MESSAGES_TO_SEND:
-    send MESSAGE on the chat of CHANNEL_TO_SEND_MESSAGE
-    sleep(COOLDOWN_BETWEEN_MESSAGES)
+    for MESSAGE in MESSAGES_TO_SEND:
+        send MESSAGE on the chat of CHANNEL_TO_SEND_MESSAGE
+        sleep(COOLDOWN_BETWEEN_MESSAGES)
+    CLIP_OF_FIRST_SECONDS_OF_LIVE = create_clip()
+    download(CLIP_OF_FIRST_SECONDS_OF_LIVE, inside "logs/{CHANNEL_TO_MONITOR}/clips")
 ```
+
 ---
 ### Clone the project
 ```bash
 git clone https://github.com/titouanck/Twitch-messageOnLive.git
 cd Twitch-messageOnLive
 ```
+
 ---
 ### Set-up the project
 Inside the `configurations/` directory, you will find multiple files ending with the extension **.JSON**.  
@@ -24,6 +28,7 @@ For example, with `kyzen_.json` I want to send two defined messages on **kyzen_*
 |           |           |
 |-----------|-----------|
 | <img width="276" alt="Screenshot 2024-01-10 at 18 55 19" src="https://github.com/titouanck/Twitch-messageOnLive/assets/87268044/12aa421c-2e02-44df-b115-ec335e698089"> | <img width="548" alt="Screenshot 2024-01-10 at 19 26 43" src="https://github.com/titouanck/Twitch-messageOnLive/assets/87268044/a4daee1a-b7c4-469f-b92f-3b45ce83da05">
+
 ---
 ### Launch the project
 ```bash
@@ -64,12 +69,13 @@ WARNING: The JSON_FILE variable is not set. Defaulting to a blank string.
 
 [✔️] docker-compose built successfully
 Starting mol_kyzen_ ... done
-Launching docker-compose up for kyzen_.json
+Launching docker-compose up with kyzen_.json
 Starting mol_podasai ... done
-Launching docker-compose up for podasai.json
+Launching docker-compose up with podasai.json
 Starting mol_snayzy ... done
-Launching docker-compose up for snayzy.json
+Launching docker-compose up with snayzy.json
 ```
+
 ---
 ### Constant logs
 Logs including **live status** and all **chat messages** are saved in the `/logs` directory for as long as the program is running.  
