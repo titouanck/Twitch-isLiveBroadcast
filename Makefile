@@ -7,7 +7,7 @@ APP_ID				= qn9dgxv87jm94tkdufaruuhq52nqz3
 
 ############################################################################
 
-all: stop check-env build run
+all: stop init-env build run
 
 stop:
 	@if [ -n "$$(docker ps --filter ancestor=$(IMAGE) | grep $(IMAGE))" ]; then \
@@ -32,7 +32,7 @@ run: $(mkdir-logs) $(check-characters) $(JSON_FILES:.json=.up)
 
 ############################################################################
 
-check-env:
+init-env:
 	@if [ ! -f $(ENV_FILE) ]; then \
 		echo "\033[0;32mPreparing to create $(ENV_FILE) file...\033[0m"; \
 		printf "Get an oauth token at : \e[4m%s\e[0m\n" "https://titouanck.github.io/Twitch-messageOnLive/" && \
@@ -77,6 +77,6 @@ fclean: $(clean)
 	rm -rf logs/ docker/__pycache__/
 	rm -f docker/.env
 
-.PHONY: all stop build run check-characters mkdir-logs clean fclean
+.PHONY: all stop build run init-env check-characters mkdir-logs clean fclean
 
 ############################################################################

@@ -6,7 +6,7 @@
 #    By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/06 12:45:06 by titouanck         #+#    #+#              #
-#    Updated: 2024/01/10 16:08:43 by tchevrie         ###   ########.fr        #
+#    Updated: 2024/01/11 04:42:37 by tchevrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,10 @@ from mod_time       import get_date, get_time
 from mod_requests   import get_username
 from mod_data       import get_data
 
-PATH_DIRECTORY = "./logs"
-LOGS_DIRECTORY = ""
-CHAT_DIRECTORY = "chat"
+PATH_DIRECTORY  = "./logs"
+LOGS_DIRECTORY  = ""
+CHAT_DIRECTORY  = "chat"
+CLIPS_DIRECTORY = "clips"
 
 # **************************************************************************** #
 
@@ -59,6 +60,20 @@ def open_chat(filename):
     open_chat.filename = parent_directory + '/' + open_chat.date + ".log"
     open_chat.file_obj = open_file(open_chat.filename)
     return open_chat.file_obj
+
+def open_clip(filename):
+    parent_directory = PATH_DIRECTORY + '/' + filename + '/' + CLIPS_DIRECTORY
+    if not os.path.exists(parent_directory):
+        os.makedirs(parent_directory)
+    os.chmod(PATH_DIRECTORY + '/' + filename, 0o777)
+    os.chmod(parent_directory, 0o777)
+
+    open_clip.date     = get_date()
+    open_clip.time     = get_time()
+    open_clip.filename = parent_directory + '/' + open_clip.date + " " + open_clip.time + ".mp4"
+    open_clip.file_obj = open(open_clip.filename, 'wb')
+    os.chmod(open_clip.filename, 0o766)
+    return open_clip.file_obj
 
 # **************************************************************************** #
 
