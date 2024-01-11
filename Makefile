@@ -71,10 +71,9 @@ sudo-run: mkdir-logs
 ############################################################################
 
 clean:
-	rm -rf logs/ docker/__pycache__/
+	rm -rf logs/ docker/app/__pycache__/
 
 fclean: $(clean)
-	rm -rf logs/ docker/__pycache__/
 	rm -f docker/.env
 
 .PHONY: all stop build run init-env check-characters mkdir-logs clean fclean
