@@ -6,7 +6,7 @@
 #    By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/06 13:26:34 by titouanck         #+#    #+#              #
-#    Updated: 2024/01/11 05:06:17 by tchevrie         ###   ########.fr        #
+#    Updated: 2024/01/12 15:43:06 by tchevrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,6 @@ from mod_files      import open_logs, open_chat, write_logs, write_chat
 from mod_requests   import is_live_broadcast, get_username
 from mod_irc        import IrcServer
 from mod_data       import get_data
-from mod_clips      import get_clip
 
 JSON_FILENAME = os.environ["JSON_FILE"].rstrip(".json")
 
@@ -35,7 +34,6 @@ def main():
     main.irc_server.connect()
     chat_thread = threading.Thread(target=main.irc_server.listener)
     chat_thread.start()
-    main.clip_thread = threading.Thread(target=get_clip, args=(get_data.channel_to_monitor, ))
     routine()
     chat_thread.join()
 
@@ -73,19 +71,14 @@ def is_offline():
 
 def just_went_live():
     time_to_sleep = 60
-    first_message = True
     write_logs(get_data.channel_to_monitor + " just went LIVE!")
     try:
         for message in get_data.messages_to_send:
             main.irc_server.send_privmsg(message)
-            if first_message == True:
-                main.clip_thread.start()
-                first_message = False
             time.sleep(get_data.cooldown_between_messages)
             time_to_sleep -= get_data.cooldown_between_messages;
         if time_to_sleep > 0:
             time.sleep(time_to_sleep)
-        main.clip_thread.join()
     except Exception as e:
         raise e
 

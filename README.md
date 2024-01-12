@@ -6,8 +6,6 @@ when CHANNEL_TO_MONITOR goes live:
     for MESSAGE in MESSAGES_TO_SEND:
         send MESSAGE on the chat of CHANNEL_TO_SEND_MESSAGE
         sleep(COOLDOWN_BETWEEN_MESSAGES)
-    CLIP_OF_FIRST_SECONDS_OF_LIVE = create_clip()
-    download(CLIP_OF_FIRST_SECONDS_OF_LIVE, inside "logs/{CHANNEL_TO_MONITOR}/clips")
 ```
 
 ---
