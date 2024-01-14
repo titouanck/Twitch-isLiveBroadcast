@@ -6,7 +6,7 @@
 #    By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/10 06:32:54 by tchevrie          #+#    #+#              #
-#    Updated: 2024/01/10 19:25:44 by tchevrie         ###   ########.fr        #
+#    Updated: 2024/01/14 01:06:15 by tchevrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,8 +41,8 @@ def	get_data():
 	if not (all(key in data for key in needed_keys) and all(isinstance(data[key], expected_types[key]) for key in expected_types)):
 		raise Exception("The data is invalid.")
 
-	get_data.channel_to_monitor 		= data["channel_to_monitor"]
-	get_data.channel_to_send_message 	= data["channel_to_send_message"]
+	get_data.channel_to_monitor 		= data["channel_to_monitor"].lower()
+	get_data.channel_to_send_message 	= data["channel_to_send_message"].lower()
 	get_data.messages_to_send 			= data["messages_to_send"]
 	get_data.cooldown_between_messages 	= data["cooldown_between_messages"]
 
