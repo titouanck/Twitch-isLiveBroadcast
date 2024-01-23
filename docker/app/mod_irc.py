@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    mod_irc.py                                         :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+         #
+#    By: titouanck <chevrier.titouan@gmail.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/06 16:41:32 by titouanck         #+#    #+#              #
-#    Updated: 2024/01/10 07:59:34 by tchevrie         ###   ########.fr        #
+#    Updated: 2024/01/23 14:37:06 by titouanck        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,6 +70,10 @@ class IrcServer:
         while True:
             try:
                 response = self.socket.recv(1024).decode("utf-8")
+                if len(response) == 0:
+                    write_chat(f"<!> DEBUG/ERROR <!> :len(response)=0&response={response}")
+                    self.get_socket()
+                    self.connect()
                 while "\n" in response:
                     splited_response = response.split("\n", 1)
                     response = splited_response[1]
